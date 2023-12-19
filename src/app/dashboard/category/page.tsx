@@ -1,8 +1,10 @@
 import React from 'react'
 
 const category = () => {
+  console.log();
+  
   return (
-    <div>category</div>
+    <div>category Page</div>
   )
 }
 
