@@ -1,12 +1,11 @@
 interface IProps {
   name: string;
   label: string;
-  type: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
 }
 
-const InputWithLabel = ({ type, name, label, onChange, value }: IProps) => {
+const InputWithLabel = ({name, label, onChange, value }: IProps) => {
   return (
     <div className="relative flex flex-col  mb-10 w-full ">
       <label
@@ -31,8 +30,8 @@ const InputWithLabel = ({ type, name, label, onChange, value }: IProps) => {
         onChange={onChange}
         id={name}
         name={name}
-        type={type}
-        placeholder=" "
+        type="text"
+        placeholder=""
         className={`
                     block
                     w-full
