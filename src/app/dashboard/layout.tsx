@@ -7,7 +7,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -17,10 +16,43 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
+//Icons
+import CategoryIcon from '@mui/icons-material/Category';
+import PeopleIcon from '@mui/icons-material/People';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
+
+
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+const links = [
+  {
+    title:"Categories",
+    path:"/dashboard/category",
+    icon:<ViewListIcon/>
+
+  },
+  {
+    title:"Customers",
+    path:"/dashboard/customer",
+    icon:<PeopleIcon/>
+  },
+  {
+    title:"Products",
+    path:"/dashboard/product",
+    icon:<CategoryIcon/>
+  },
+  {
+    title:"Orders",
+    path:"/dashboard/order",
+    icon:<AssignmentIcon/>
+
+  },
+]
 
 const drawerWidth = 240;
 
@@ -74,6 +106,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname()
+
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -85,7 +120,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     setOpen(false);
   };
 
-  const pathname = usePathname()
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -128,16 +162,24 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          {links.map((link,i) => {
+              const isActive  = pathname.startsWith(link.path)
+            return (
+              <ListItem key={i} disablePadding>
+                <ListItemButton>
+                  <Link
+                  className={`flex items-center w-full ${isActive && "text-orange-600"}`}
+                  href={link.path}
+                  >
+                  <ListItemIcon className={`${isActive && "!text-orange-600"}`}>
+                    {link.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={link.title} />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
         </List>
 
         <Divider />
@@ -147,7 +189,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
@@ -155,6 +197,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           ))}
         </List>
       </Drawer>
+
+
+
       <Main open={open}>
         <DrawerHeader />
         {children}
@@ -163,18 +208,3 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 export default DashboardLayout;
-
-// export default function DashboardLayout({
-//     children,
-// }: {
-//   children: React.ReactNode
-// }) {
-//   return (
-//     <html lang="en">
-//       <body>
-//         <Navbar/>
-//       {children}
-//       </body>
-//     </html>
-//   )
-// }

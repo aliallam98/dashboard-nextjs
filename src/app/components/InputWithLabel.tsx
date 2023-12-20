@@ -1,13 +1,14 @@
 interface IProps {
   name: string;
   label: string;
+  type: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
 }
 
-const InputWithLabel = ({name, label, onChange, value }: IProps) => {
+const InputWithLabel = ({ type, name, label, onChange, value }: IProps) => {
   return (
-    <div className="relative flex flex-col  mb-10 w-full ">
+    <div className="relative flex flex-col">
       <label
         htmlFor={name}
         className={`
@@ -25,23 +26,23 @@ const InputWithLabel = ({name, label, onChange, value }: IProps) => {
       >
         {label}
       </label>
-
       <input
         onChange={onChange}
         id={name}
         name={name}
-        type="text"
-        placeholder=""
+        type={type}
+        placeholder=" "
         className={`
                     block
                     w-full
-                    p-2
-                    pl-6
+                    pt-3
+                    pb-1
+                    px-3
                     text-xl
                     border border-neutral-200
                     focus:outline-none
                     focus:ring-0
-                  `}
+        `}
       />
     </div>
   );
