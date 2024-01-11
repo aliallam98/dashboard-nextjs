@@ -1,51 +1,39 @@
+
+import { LegacyRef, forwardRef } from 'react';
+
+
 interface IProps {
-  name: string;
-  label: string;
-  type: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string;
+    type:string
+    name?:string
+    className?:string
+    disabled?:boolean
+    defaultValue?:string | number 
+
 }
 
-const InputWithLabel = ({ type, name, label, onChange, value }: IProps) => {
+
+// eslint-disable-next-line react/display-name
+const InputWithLabel = forwardRef(({ type, name, className,defaultValue, ...props }: IProps, ref:LegacyRef<HTMLInputElement>) => {
   return (
-    <div className="relative flex flex-col">
-      <label
-        htmlFor={name}
-        className={`
-                    text-neutral-600
-                    absolute
-                    top-0
-                    border-x-8
-                    border-white
-                    bg-white
-                    left-6
-                    origin-[0]
-                    scale
-                    -translate-y-3
-                  `}
-      >
-        {label}
-      </label>
+    <div className="relative">
       <input
-        onChange={onChange}
-        id={name}
-        name={name}
+        {...props}
+        defaultValue={defaultValue}
+        ref={ref}
+        className={`block w-full pb-1 px-6 pt-3 border  border-gray-400 outline-none disabled:bg-transparent/10 ${className}`}
         type={type}
-        placeholder=" "
-        className={`
-                    block
-                    w-full
-                    pt-3
-                    pb-1
-                    px-3
-                    text-xl
-                    border border-neutral-200
-                    focus:outline-none
-                    focus:ring-0
-        `}
+        name={name}
+        id={name}
       />
+      <label
+        className="capitalize absolute left-6 -top-[14px] bg-white border-x-4 border-white"
+        htmlFor={name}
+      >
+        {name}
+      </label>
     </div>
   );
-};
+});
 
-export default InputWithLabel;
+export default InputWithLabel
+
